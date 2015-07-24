@@ -1,6 +1,4 @@
-
-  <body>
-    <h2>Quiz: el juego de las preguntas</h2>
-    <%= respuesta %><p>
-    <a href='/quizes/question'>Inténtelo otra vez</a>
-  </body>
+<p>
+  <%= respuesta %>
+  <a href="/quizes/<%= quiz.id %>">Volver</a>
+</p>
