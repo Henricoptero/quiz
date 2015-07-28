@@ -4,7 +4,7 @@ var quizController = require('../controllers/quiz_controller');
 
 // Página inicial
 router.get('/', function(req, res) {
-  res.render('index', { title: 'Quiz', errors: [] });
+  res.render('index', { title: 'Quiz', errors: []});
 });
 
 // GET Página autor

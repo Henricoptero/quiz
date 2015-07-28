@@ -17,7 +17,7 @@ exports.load = function(req, res, next, quizId){
 exports.index = function(req, res){
   models.Quiz.findAll().then(function(quizes){
     res.render('quizes/index.ejs', {quizes: quizes, errors: []});
-  }
+   }
   ).catch(function(error) {next(error);})
 };
 
@@ -53,11 +53,11 @@ exports.create = function(req, res){
     if (err){
       res.render('quizes/new', {quiz: quiz, errors: err.errors});
     } else{
-      // guarda eb DB los campos pregunta y respuesta de quiz
-      quiz.save({fields:["pregunta", "respuesta"]}).then(function(){
-        res.redirect('/quizes')});  // Redirección HTTP /URL relativo
-    }
+      quiz  // guarda eb DB los campos pregunta y respuesta de quiz
+      .save({fields:["pregunta", "respuesta"]}).then(function(){
+        res.redirect('/quizes')})  // Redirección HTTP /URL relativo
+    }                               //a lista de preguntas
    }
   );
-};                          //a lista de preguntas
+};              
 
