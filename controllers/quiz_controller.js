@@ -30,7 +30,7 @@ exports.show = function(req, res){
 exports.answer = function(req, res){
   var resultado = 'Incorrecto';
   if(req.query.respuesta === req.quiz.respuesta){
-    resultado = 'Correcto'   
+    resultado = 'Correcto'
   }
   res.render('quizes/answer', {quiz: req.quiz, respuesta: resultado,
     errors: []});
@@ -39,7 +39,7 @@ exports.answer = function(req, res){
 // GET quizes/new
 exports.new = function(req, res){
   var quiz = models.Quiz.build(// crea objeto quiz
-    {pregunta: "Pregunta", respuesta: "Respuesta"}
+    {tema: "Tema", pregunta: "Pregunta", respuesta: "Respuesta"}
   );
 
   res.render('quizes/new', {quiz: quiz, errors: []});
@@ -53,13 +53,13 @@ exports.create = function(req, res){
     if (err){
       res.render('quizes/new', {quiz: quiz, errors: err.errors});
     } else{
-      quiz  // guarda eb DB los campos pregunta y respuesta de quiz
-      .save({fields:["pregunta", "respuesta"]}).then(function(){
+      quiz  // guarda en DB los campos pregunta y respuesta de quiz
+      .save({fields:["tema", "pregunta", "respuesta"]}).then(function(){
         res.redirect('/quizes')})  // Redirección HTTP /URL relativo
     }                               //a lista de preguntas
    }
   );
-};              
+};
 
 //GET /quizes/:id/edit
 exports.edit = function(req, res){
@@ -70,6 +70,7 @@ exports.edit = function(req, res){
 
 // PUT /quizes/:id
 exports.update = function(req, res){
+  req.quiz.tema = req.body.quiz.tema;
   req.quiz.pregunta = req.body.quiz.pregunta;
   req.quiz.respuesta = req.body.quiz.respuesta;
 
@@ -79,11 +80,11 @@ exports.update = function(req, res){
       res.render('quizes/edit', {quiz: req.quiz, errors: err.errors});
     }
     else{
-      req.quiz.save( {fields: ["pregunta", "respuesta"]})
-      .then(function(){res.redirect('/quizes');}); // Redirección HTTP a la lista                                     
+      req.quiz.save( {fields: ["tema", "pregunta", "respuesta"]})
+      .then(function(){res.redirect('/quizes');}); // Redirección HTTP a la lista
     }                                              //de preguntas (URL relativo)
-   }                                            
-  );                                              
+   }
+  );
 };
 
 // DELETE /quizes/:id
