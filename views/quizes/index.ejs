@@ -1,4 +1,7 @@
-<p> <%= quizes[0].tema %></p></br>
+<form method="get" action="/quizes">
+  <input type="text" name="search" placeholder="texto_a_buscar"/>
+  <input type="submit" value="enviar"/>
+</form></br>
 <table>
 <% var i; for (i=0; i < quizes.length; i++) { %>
    <tr>

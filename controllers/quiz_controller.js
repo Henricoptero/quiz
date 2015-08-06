@@ -13,12 +13,26 @@ exports.load = function(req, res, next, quizId){
   ).catch(function(error) {next(error);});
 };
 
-// GET /quizes
+// GET /quizes && GET /quizes?search=texto_a_buscar
 exports.index = function(req, res){
+  search = "%"+req.query.search+"%";
+  // Si se envia alguna busqueda...
+  if(req.query.search){
+    // La variable dlm delimita el string contenido en search con % para evitar
+    //problemas con los espacios en blanco
+    var dlm = (req.query.search || '').replace(" ", "%");
+
+    models.Quiz.findAll({where:["pregunta like ?", search],
+                               order:'pregunta ASC'}
+    ).then(function(quizes){
+            res.render('quizes/index', {quizes: quizes, errors: []});
+    }).catch(function(error) {next(error);});
+  } else{  // Si no se envia busqueda se renderiza la lista de preguntas normal
   models.Quiz.findAll().then(function(quizes){
-    res.render('quizes/index.ejs', {quizes: quizes, errors: []});
+    res.render('quizes/index', {quizes: quizes, errors: []});
    }
-  ).catch(function(error) {next(error);})
+  ).catch(function(error) {next(error);});
+}
 };
 
 // GET /quizes/:id
