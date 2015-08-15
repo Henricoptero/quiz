@@ -39,7 +39,7 @@ app.use(function(req, res, next){
     if(!req.session.contador){  // Si no hay contador iniciado
       req.session.contador = new Date().getTime();
     } else{
-      if(new Date().getTime() - req.session.contador > 12000){  // Si superior a dos minutos
+      if(new Date().getTime() - req.session.contador > 120000){  // Si superior a dos minutos
         delete req.session.user;  //Borra sesión
         req.session.contador = null;  // Resetea contador
       } else{
