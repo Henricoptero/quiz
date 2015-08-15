@@ -33,6 +33,23 @@ app.use(session());
 app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Limite de tiempo de sesión
+app.use(function(req, res, next){
+  if(req.session.user){  // si existe sesión
+    if(!req.session.contador){  // Si no hay contador iniciado
+      req.session.contador = new Date().getTime();
+    } else{
+      if(new Date().getTime() - req.session.contador > 12000){  // Si superior a dos minutos
+        delete req.session.user;  //Borra sesión
+        req.session.contador = null;  // Resetea contador
+      } else{
+        req.session.contador = new Date().getTime();
+      }
+    }
+  }
+  next();
+});
+
 // Helpers dinámicos
 app.use(function(req, res, next){
   // guardar path en session.redir para después de login

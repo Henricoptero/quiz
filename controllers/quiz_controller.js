@@ -58,8 +58,12 @@ exports.new = function(req, res){
   var quiz = models.Quiz.build(// crea objeto quiz
     {tema: "Tema", pregunta: "Pregunta", respuesta: "Respuesta"}
   );
-
-  res.render('quizes/new', {quiz: quiz, errors: []});
+  
+  if(req.session.user){
+    res.render('quizes/new', {quiz: quiz, errors: []});
+  } else{
+    res.render('sessions/new.ejs', {quiz: quiz, errors: []});
+  };
 };
 
 // POST /quizes/create
